@@ -6,16 +6,22 @@ const containerSearch = document.querySelector("#container-search");
 
 const btnClear = document.querySelector("#btn-clear");
 const btnTest = document.querySelector("#btn-test");
+const btnFilter = document.querySelector("#btn-filter");
 
 let searchResults = document.querySelectorAll(".search-result");
 let searchResultClose = document.querySelectorAll(".search-result-close");
 let filterElements = document.querySelectorAll(".filter-element");
+
+let jobItems = document.querySelectorAll("#job-item");
+
+const filterItems = [];
 
 // const role = ["Frontend", "Backend", "Fullstack"];
 // const level = ["Junior", "Midweight", "Senior"];
 // const languages = ["Python", "Ruby", "JavaScript", "HTML", "CSS"];
 // const tools = ["React", "Sass", "Vue", "Django", "RoR"];
 
+// console.log(filterElements);
 const getData = async function (path) {
   try {
     const promise = fetch(path);
@@ -24,6 +30,7 @@ const getData = async function (path) {
 
     data.forEach((ele, i) => {
       const html = `<div
+      id="job-item"
       class="relative flex flex-col bg-white rounded-md px-6 py-6 space-y-6 shadow-xl max-w-sm hover:border-desaturatedDarkCyan hover:border-l-4  hover:cursor-pointer md:flex-row md:max-w-full md:space-y-0 md:items-center"
     >
 
@@ -198,17 +205,12 @@ const removeSearchItem = function () {
   });
 };
 
-// Clearing searchresults
-btnClear.addEventListener("click", function () {
-  searchResults = document.querySelectorAll(".search-result");
-  searchResults.forEach((ele) => ele.classList.add("hidden"));
-});
-
 // console.log(filterElements);
 // const createSearchItem = function () {
 //   filterElements = document.querySelectorAll(".filter-element");
 //   filterElements.forEach((ele) => {
 //     ele.addEventListener("click", function () {
+//       console.log("TEST");
 //       const newSearchItem = `
 //       <div class="search-result flex mr-4 my-2">
 //       <div
@@ -233,8 +235,27 @@ btnClear.addEventListener("click", function () {
 
 // createSearchItem();
 
+btnFilter.addEventListener("click", function () {
+  searchResults = document.querySelectorAll(".search-result");
+  jobItems = document.querySelectorAll("#job-item");
+  searchResults.forEach((res) => {
+    console.log(res);
+    // console.log(jobItems.outerText.includes(`${res.outerText}`));
+    console.log(jobItems);
+    // console.log(jobItems.querySelector(""));
+    jobItems.filter((item) => console.log(item));
+  });
+});
+
+// Clearing searchresults
+btnClear.addEventListener("click", function () {
+  searchResults = document.querySelectorAll(".search-result");
+  searchResults.forEach((ele) => ele.classList.add("hidden"));
+});
+
 btnTest.addEventListener("click", function () {
   filterElements = document.querySelectorAll(".filter-element");
+  // console.log(filterElements);
   filterElements.forEach((ele) => {
     ele.addEventListener("click", function () {
       const newSearchItem = `
@@ -252,6 +273,7 @@ btnTest.addEventListener("click", function () {
          <img src="assets/images/iconremove.svg" alt="" />
         </div>
     </div>`;
+      // console.log(filterElements);
 
       containerSearch.insertAdjacentHTML("beforeend", newSearchItem);
       removeSearchItem();
@@ -260,3 +282,5 @@ btnTest.addEventListener("click", function () {
 });
 
 getData("data.json");
+
+// console.log(filterElements);
