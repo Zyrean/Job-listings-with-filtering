@@ -3,30 +3,30 @@
 @tailwind utilities;
 
 @layer base {
-  h3 {
-    @apply mb-8 text-4xl font-bold text-darkGrayishBlue md:text-5xl;
-  }
-  h5 {
-    @apply mb-2 text-xl font-bold text-darkGrayishBlue;
-  }
-  p,
-  a {
-    @apply text-grayishBlue;
-  }
+}
+
+#background-mobile {
+  background-image: url("../assets/images/bg-header-mobile.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .section-container {
   @apply max-w-6xl mx-auto text-center px-10;
 }
 
-body {
-  background-image: url("../images/bg-header-desktop.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
+@media (min-width: 768px) {
+  #background-mobile {
+    background-image: url("../assets/images/bg-header-desktop.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
-@media (max-width: 576px) {
-  body {
-    background-image: url("../images/bg-header-mobile.png");
+  #icon-mobile {
+    @apply hidden;
+  }
+
+  #icon-desktop {
+    @apply block;
   }
 }

@@ -10,13 +10,14 @@ module.exports = {
     },
     extend: {
       colors: {
-        strongCyan: "#26BAA4",
-        lightBlue: "#6173FF",
-        darkGrayishBlue: "#4C545D",
-        grayishBlue: "#9FABB2",
+        desaturatedDarkCyan: "#5BA4A4",
+        lightGrayishCyan: "#EFFAFA",
+        lightGrayishCyanF: "#EEF6F6",
+        darkGrayishCyan: "#7B8E8E",
+        veryDarkGrayishCyan: "#2C3A3A",
       },
       fontFamily: {
-        sans: ["Bai Jamjuree", "sans-serif"],
+        sans: ["League Spartan", "sans-serif"],
       },
     },
   },
