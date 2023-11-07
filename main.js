@@ -11,24 +11,24 @@ const btnFilter = document.querySelector("#btn-filter");
 let searchResults = document.querySelectorAll(".search-result");
 let searchResultClose = document.querySelectorAll(".search-result-close");
 let filterElements = document.querySelectorAll(".filter-element");
-
 let jobItems = document.querySelectorAll("#job-item");
-
-const filterItems = [];
 
 // const role = ["Frontend", "Backend", "Fullstack"];
 // const level = ["Junior", "Midweight", "Senior"];
 // const languages = ["Python", "Ruby", "JavaScript", "HTML", "CSS"];
 // const tools = ["React", "Sass", "Vue", "Django", "RoR"];
 
-// console.log(filterElements);
 const getData = async function (path) {
   try {
     const promise = fetch(path);
     const response = await promise;
     const data = await response.json();
 
+    // return data;
+    console.log(data);
+
     data.forEach((ele, i) => {
+      // console.log(ele);
       const html = `<div
       id="job-item"
       class="relative flex flex-col bg-white rounded-md px-6 py-6 space-y-6 shadow-xl max-w-sm hover:border-desaturatedDarkCyan hover:border-l-4  hover:cursor-pointer md:flex-row md:max-w-full md:space-y-0 md:items-center"
@@ -125,8 +125,137 @@ const getData = async function (path) {
           id="container-languages"
           class="flex justify-center items-center mt-4 md:mt-0"
         >
+        ${displayLanguages(ele)}
+        </div>
+      </div>
+    </div>`;
 
-          <div
+      containerList.insertAdjacentHTML("beforeend", html);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const displayLanguages = function (ele) {
+  let html = ``;
+  ele.languages.forEach((language) => {
+    html += `<div
+  class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
+  >
+    <div
+      class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
+    >
+      <p
+        class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
+    >
+      ${language}
+    </p>
+  </div>
+</div>`;
+  });
+  return html;
+
+  // containerLanguages.insertAdjacentHTML("afterbegin", language);
+};
+
+// Looping over searchresults and hide targeted element
+const removeSearchItem = function () {
+  searchResultClose = document.querySelectorAll(".search-result-close");
+  searchResultClose.forEach((searchEle) => {
+    searchEle.addEventListener("click", function () {
+      searchEle.closest(".search-result").remove();
+    });
+  });
+};
+
+// console.log(filterElements);
+const createSearchItem = function () {
+  console.log(filterElements);
+  filterElements = document.querySelectorAll(".filter-element");
+  console.log(filterElements);
+  filterElements.forEach((ele) => {
+    ele.addEventListener("click", function () {
+      console.log("TEST");
+      const newSearchItem = `
+      <div class="search-result flex mr-4 my-2">
+      <div
+      class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1"
+      >
+      <p class="text-desaturatedDarkCyan font-semibold text-sm">
+      ${ele.textContent}
+      </p>
+      </div>
+      <div
+      class="search-result-close flex justify-center items-center rounded-r-sm bg-desaturatedDarkCyan w-8 hover:bg-veryDarkGrayishCyan hover:cursor-pointer"
+      >
+      <img src="assets/images/iconremove.svg" alt="" />
+      </div>
+      </div>`;
+
+      containerSearch.insertAdjacentHTML("beforeend", newSearchItem);
+      removeSearchItem();
+    });
+  });
+};
+
+// createSearchItem();
+
+btnFilter.addEventListener("click", function () {
+  searchResults = document.querySelectorAll(".search-result");
+  jobItems = document.querySelectorAll("#job-item");
+  searchResults.forEach((res) => {
+    jobItems.forEach((item) => {
+      if (!item.outerText.includes(`${res.outerText}`)) {
+        item.classList.add("hidden");
+      }
+    });
+  });
+});
+
+// Clearing searchresults
+btnClear.addEventListener("click", function () {
+  searchResults = document.querySelectorAll(".search-result");
+  searchResults.forEach((ele) => ele.classList.add("hidden"));
+
+  jobItems.forEach((item) => item.classList.remove("hidden"));
+});
+
+btnTest.addEventListener("click", function () {
+  filterElements = document.querySelectorAll(".filter-element");
+  // console.log(filterElements);
+  filterElements.forEach((ele) => {
+    ele.addEventListener("click", function () {
+      const newSearchItem = `
+      <div class="search-result flex mr-4 my-2">
+        <div
+          class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1"
+        >
+          <p class="text-desaturatedDarkCyan font-semibold text-sm">
+           ${ele.textContent}
+          </p>
+        </div>
+        <div
+          class="search-result-close flex justify-center items-center rounded-r-sm bg-desaturatedDarkCyan w-8 h-8 hover:bg-veryDarkGrayishCyan hover:cursor-pointer"
+        >
+         <img class="w-8 h-8" src="assets/images/iconremove.svg" alt="" />
+        </div>
+    </div>`;
+
+      containerSearch.insertAdjacentHTML("beforeend", newSearchItem);
+      removeSearchItem();
+    });
+  });
+});
+
+const setup = async function () {
+  await getData("data.json");
+  createSearchItem();
+};
+
+setup();
+
+/* <div
             class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
           >
             <div
@@ -166,121 +295,4 @@ const getData = async function (path) {
                 JavaScript
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-
-      containerList.insertAdjacentHTML("beforeend", html);
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// const displayLanguages = function () {
-//   const language = `<div
-//   class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
-//   >
-//     <div
-//       class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
-//     >
-//       <p
-//         class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
-//     >
-//       ${`HTML`}
-//     </p>
-//   </div>
-// </div>`;
-//   containerLanguages.insertAdjacentHTML("afterbegin", language);
-// };
-
-// Looping over searchresults and hide targeted element
-const removeSearchItem = function () {
-  searchResultClose = document.querySelectorAll(".search-result-close");
-  searchResultClose.forEach((searchEle) => {
-    searchEle.addEventListener("click", function () {
-      searchEle.closest(".search-result").remove();
-    });
-  });
-};
-
-// console.log(filterElements);
-// const createSearchItem = function () {
-//   filterElements = document.querySelectorAll(".filter-element");
-//   filterElements.forEach((ele) => {
-//     ele.addEventListener("click", function () {
-//       console.log("TEST");
-//       const newSearchItem = `
-//       <div class="search-result flex mr-4 my-2">
-//       <div
-//       class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1"
-//       >
-//       <p class="text-desaturatedDarkCyan font-semibold text-sm">
-//       ${ele.textContent}
-//       </p>
-//       </div>
-//       <div
-//       class="search-result-close flex justify-center items-center rounded-r-sm bg-desaturatedDarkCyan w-8 hover:bg-veryDarkGrayishCyan hover:cursor-pointer"
-//       >
-//       <img src="assets/images/iconremove.svg" alt="" />
-//       </div>
-//       </div>`;
-
-//       containerSearch.insertAdjacentHTML("beforeend", newSearchItem);
-//       removeSearchItem();
-//     });
-//   });
-// };
-
-// createSearchItem();
-
-btnFilter.addEventListener("click", function () {
-  searchResults = document.querySelectorAll(".search-result");
-  jobItems = document.querySelectorAll("#job-item");
-  searchResults.forEach((res) => {
-    console.log(res);
-    // console.log(jobItems.outerText.includes(`${res.outerText}`));
-    console.log(jobItems);
-    // console.log(jobItems.querySelector(""));
-    jobItems.filter((item) => console.log(item));
-  });
-});
-
-// Clearing searchresults
-btnClear.addEventListener("click", function () {
-  searchResults = document.querySelectorAll(".search-result");
-  searchResults.forEach((ele) => ele.classList.add("hidden"));
-});
-
-btnTest.addEventListener("click", function () {
-  filterElements = document.querySelectorAll(".filter-element");
-  // console.log(filterElements);
-  filterElements.forEach((ele) => {
-    ele.addEventListener("click", function () {
-      const newSearchItem = `
-      <div class="search-result flex mr-4 my-2">
-        <div
-          class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1"
-        >
-          <p class="text-desaturatedDarkCyan font-semibold text-sm">
-           ${ele.textContent}
-          </p>
-        </div>
-        <div
-          class="search-result-close flex justify-center items-center rounded-r-sm bg-desaturatedDarkCyan w-8 hover:bg-veryDarkGrayishCyan hover:cursor-pointer"
-        >
-         <img src="assets/images/iconremove.svg" alt="" />
-        </div>
-    </div>`;
-      // console.log(filterElements);
-
-      containerSearch.insertAdjacentHTML("beforeend", newSearchItem);
-      removeSearchItem();
-    });
-  });
-});
-
-getData("data.json");
-
-// console.log(filterElements);
+          </div> */
