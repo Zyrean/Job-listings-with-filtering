@@ -25,7 +25,7 @@ const getData = async function (path) {
     const data = await response.json();
 
     // return data;
-    console.log(data);
+    // console.log(data);
 
     data.forEach((ele, i) => {
       // console.log(ele);
@@ -159,12 +159,34 @@ const displayLanguages = function (ele) {
   // containerLanguages.insertAdjacentHTML("afterbegin", language);
 };
 
+const updateJobs = function () {
+  searchResults = document.querySelectorAll(".search-result");
+  jobItems = document.querySelectorAll("#job-item");
+  console.log(searchResults);
+  searchResults.forEach((res) => {
+    jobItems.forEach((item) => {
+      if (!item.outerText.includes(`${res.outerText}`)) {
+        item.classList.add("hidden");
+      }
+    });
+  });
+};
+
 // Looping over searchresults and hide targeted element
 const removeSearchItem = function () {
   searchResultClose = document.querySelectorAll(".search-result-close");
+
   searchResultClose.forEach((searchEle) => {
     searchEle.addEventListener("click", function () {
       searchEle.closest(".search-result").remove();
+      searchResults = document.querySelectorAll(".search-result");
+
+      updateJobs();
+
+      if (searchResults.length === 0) {
+        jobItems.forEach((item) => item.classList.remove("hidden"));
+      }
+      console.log("CLOSED");
     });
   });
 };
@@ -195,6 +217,7 @@ const createSearchItem = function () {
 
       containerSearch.insertAdjacentHTML("beforeend", newSearchItem);
       removeSearchItem();
+      updateJobs();
     });
   });
 };
@@ -251,6 +274,7 @@ btnTest.addEventListener("click", function () {
 const setup = async function () {
   await getData("data.json");
   createSearchItem();
+  console.log(jobItems);
 };
 
 setup();
