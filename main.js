@@ -5,18 +5,11 @@ const containerLanguages = document.querySelector("#container-languages");
 const containerSearch = document.querySelector("#container-search");
 
 const btnClear = document.querySelector("#btn-clear");
-const btnTest = document.querySelector("#btn-test");
-const btnFilter = document.querySelector("#btn-filter");
 
 let searchResults = document.querySelectorAll(".search-result");
 let searchResultClose = document.querySelectorAll(".search-result-close");
 let filterElements = document.querySelectorAll(".filter-element");
 let jobItems = document.querySelectorAll("#job-item");
-
-// const role = ["Frontend", "Backend", "Fullstack"];
-// const level = ["Junior", "Midweight", "Senior"];
-// const languages = ["Python", "Ruby", "JavaScript", "HTML", "CSS"];
-// const tools = ["React", "Sass", "Vue", "Django", "RoR"];
 
 const getData = async function (path) {
   try {
@@ -127,6 +120,12 @@ const getData = async function (path) {
         >
         ${displayLanguages(ele)}
         </div>
+        <div
+          id="container-tools"
+          class="flex justify-center items-center mt-4 md:mt-0"
+        >
+        ${displayTools(ele)}
+        </div>
       </div>
     </div>`;
 
@@ -159,6 +158,28 @@ const displayLanguages = function (ele) {
   // containerLanguages.insertAdjacentHTML("afterbegin", language);
 };
 
+const displayTools = function (ele) {
+  let html = ``;
+  ele.tools.forEach((tool) => {
+    html += `<div
+  class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
+  >
+    <div
+      class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
+    >
+      <p
+        class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
+    >
+      ${tool}
+    </p>
+  </div>
+</div>`;
+  });
+  return html;
+
+  // containerLanguages.insertAdjacentHTML("afterbegin", language);
+};
+
 const updateJobs = function () {
   searchResults = document.querySelectorAll(".search-result");
   jobItems = document.querySelectorAll("#job-item");
@@ -167,6 +188,8 @@ const updateJobs = function () {
     jobItems.forEach((item) => {
       if (!item.outerText.includes(`${res.outerText}`)) {
         item.classList.add("hidden");
+      } else {
+        item.classList.remove("hidden");
       }
     });
   });
@@ -186,19 +209,14 @@ const removeSearchItem = function () {
       if (searchResults.length === 0) {
         jobItems.forEach((item) => item.classList.remove("hidden"));
       }
-      console.log("CLOSED");
     });
   });
 };
 
-// console.log(filterElements);
 const createSearchItem = function () {
-  console.log(filterElements);
   filterElements = document.querySelectorAll(".filter-element");
-  console.log(filterElements);
   filterElements.forEach((ele) => {
     ele.addEventListener("click", function () {
-      console.log("TEST");
       const newSearchItem = `
       <div class="search-result flex mr-4 my-2">
       <div
@@ -222,53 +240,12 @@ const createSearchItem = function () {
   });
 };
 
-// createSearchItem();
-
-btnFilter.addEventListener("click", function () {
-  searchResults = document.querySelectorAll(".search-result");
-  jobItems = document.querySelectorAll("#job-item");
-  searchResults.forEach((res) => {
-    jobItems.forEach((item) => {
-      if (!item.outerText.includes(`${res.outerText}`)) {
-        item.classList.add("hidden");
-      }
-    });
-  });
-});
-
 // Clearing searchresults
 btnClear.addEventListener("click", function () {
   searchResults = document.querySelectorAll(".search-result");
   searchResults.forEach((ele) => ele.classList.add("hidden"));
 
   jobItems.forEach((item) => item.classList.remove("hidden"));
-});
-
-btnTest.addEventListener("click", function () {
-  filterElements = document.querySelectorAll(".filter-element");
-  // console.log(filterElements);
-  filterElements.forEach((ele) => {
-    ele.addEventListener("click", function () {
-      const newSearchItem = `
-      <div class="search-result flex mr-4 my-2">
-        <div
-          class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1"
-        >
-          <p class="text-desaturatedDarkCyan font-semibold text-sm">
-           ${ele.textContent}
-          </p>
-        </div>
-        <div
-          class="search-result-close flex justify-center items-center rounded-r-sm bg-desaturatedDarkCyan w-8 h-8 hover:bg-veryDarkGrayishCyan hover:cursor-pointer"
-        >
-         <img class="w-8 h-8" src="assets/images/iconremove.svg" alt="" />
-        </div>
-    </div>`;
-
-      containerSearch.insertAdjacentHTML("beforeend", newSearchItem);
-      removeSearchItem();
-    });
-  });
 });
 
 const setup = async function () {
@@ -278,45 +255,3 @@ const setup = async function () {
 };
 
 setup();
-
-/* <div
-            class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
-          >
-            <div
-              class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
-            >
-              <p
-                class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
-              >
-                HTML
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
-          >
-            <div
-              class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
-            >
-              <p
-                class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
-              >
-                CSS
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
-          >
-            <div
-              class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
-            >
-              <p
-                class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
-              >
-                JavaScript
-              </p>
-            </div>
-          </div> */
