@@ -17,130 +17,129 @@ const getData = async function (path) {
     const response = await promise;
     const data = await response.json();
 
-    // return data;
-    // console.log(data);
-
-    data.forEach((ele, i) => {
-      // console.log(ele);
-      const html = `<div
-      id="job-item"
-      class="relative flex flex-col bg-white rounded-md px-6 py-6 space-y-6 shadow-xl max-w-sm hover:border-desaturatedDarkCyan hover:border-l-4  hover:cursor-pointer md:flex-row md:max-w-full md:space-y-0 md:items-center"
-    >
-
-      <div id="icon-mobile" class="absolute -top-4 w-10">
-        <img src="assets/images/${ele.company
-          .toLowerCase()
-          .replaceAll(" ", "")
-          .replaceAll(".", "")}.svg" alt="" />
-      </div>
-      <div id="icon-desktop" class="hidden md:w-20">
-        <img src="assets/images/${ele.company
-          .toLowerCase()
-          .replaceAll(" ", "")
-          .replaceAll(".", "")}.svg" alt="" />
-      </div>
-      <!-- items information -->
-      <div class="flex flex-col space-y-3 md:ml-6 md:space-y-2">
-        <div class="flex items-center">
-          <p
-            class="mr-6 text-xs font-semibold text-desaturatedDarkCyan md:text-sm"
-          >
-          ${ele.company}
-          </p>
-          ${
-            ele.new
-              ? `<div
-             class="bg-desaturatedDarkCyan rounded-3xl text-white text-xs text-center px-2 pt-1 mr-2"
-            >
-            NEW!
-            </div>`
-              : ``
-          }
-        ${
-          ele.featured
-            ? `<div
-          class="bg-veryDarkGrayishCyan rounded-3xl text-white text-xs text-center px-2 pt-1"
-        >
-          FEATURED
-        </div>`
-            : ``
-        }
-        </div>
-        <div>
-          <p
-            class="text-xs text-veryDarkGrayishCyan font-semibold md:text-lg hover:text-desaturatedDarkCyan hover:cursor-pointer"
-          >
-          ${ele.position} 
-          </p>
-        </div>
-        <div
-          class="flex space-x-2 text-xs border-b-2 pb-4 max-w-sm md:border-none md:pb-0"
-        >
-        <p class="text-desaturatedDarkCyan md:text-sm">${ele.postedAt}</p>
-        <p class="text-desaturatedDarkCyan md:text-sm">&#8226;</p>
-        <p class="text-desaturatedDarkCyan md:text-sm">${ele.contract}</p>
-        <p class="text-desaturatedDarkCyan md:text-sm">&#8226;</p>
-        <p class="text-desaturatedDarkCyan md:text-sm">${ele.location}</p>
-        </div>
-      </div>
-
-      <div class="flex items-center flex-wrap md:ml-44 md:flex-nowrap">
-
-        <div
-          class="filter-element flex group hover:cursor-pointer mr-4 md:mr-0 md:ml-4"
-        >
-          <div
-            class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
-          >
-            <p
-              class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
-            >
-            ${ele.role}
-            </p>
-          </div>
-        </div>
-      
-        <div
-          class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
-        >
-          <div
-            class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
-          >
-            <p
-              class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
-            >
-            ${ele.level}
-            </p>
-          </div>
-        </div>
-
-        <div
-          id="container-languages"
-          class="flex justify-center items-center mt-4 md:mt-0"
-        >
-        ${displayLanguages(ele)}
-        </div>
-        <div
-          id="container-tools"
-          class="flex justify-center items-center mt-4 md:mt-0"
-        >
-        ${displayTools(ele)}
-        </div>
-      </div>
-    </div>`;
-
-      containerList.insertAdjacentHTML("beforeend", html);
-    });
+    return data;
   } catch (error) {
     console.log(error);
   }
+};
+
+const displayJobs = function (data) {
+  data.forEach((ele, i) => {
+    const html = `<div
+    id="job-item"
+    class="relative flex flex-col bg-white rounded-md px-6 py-6 space-y-6 shadow-xl max-w-sm hover:border-desaturatedDarkCyan hover:border-l-4  hover:cursor-pointer md:flex-row md:max-w-full md:space-y-0 md:items-center"
+  >
+
+    <div id="icon-mobile" class="absolute -top-4 w-10">
+      <img src="assets/images/${ele.company
+        .toLowerCase()
+        .replaceAll(" ", "")
+        .replaceAll(".", "")}.svg" alt="" />
+    </div>
+    <div id="icon-desktop" class="hidden md:w-20">
+      <img src="assets/images/${ele.company
+        .toLowerCase()
+        .replaceAll(" ", "")
+        .replaceAll(".", "")}.svg" alt="" />
+    </div>
+    <!-- items information -->
+    <div class="flex flex-col space-y-3 md:ml-6 md:space-y-2">
+      <div class="flex items-center">
+        <p
+          class="mr-6 text-xs font-semibold text-desaturatedDarkCyan md:text-sm"
+        >
+        ${ele.company}
+        </p>
+        ${
+          ele.new
+            ? `<div
+           class="bg-desaturatedDarkCyan rounded-3xl text-white text-xs text-center px-2 pt-1 mr-2"
+          >
+          NEW!
+          </div>`
+            : ``
+        }
+      ${
+        ele.featured
+          ? `<div
+        class="bg-veryDarkGrayishCyan rounded-3xl text-white text-xs text-center px-2 pt-1"
+      >
+        FEATURED
+      </div>`
+          : ``
+      }
+      </div>
+      <div>
+        <p
+          class="text-xs text-veryDarkGrayishCyan font-semibold md:text-lg hover:text-desaturatedDarkCyan hover:cursor-pointer"
+        >
+        ${ele.position} 
+        </p>
+      </div>
+      <div
+        class="flex space-x-2 text-xs border-b-2 pb-4 max-w-sm md:border-none md:pb-0"
+      >
+      <p class="text-desaturatedDarkCyan md:text-sm">${ele.postedAt}</p>
+      <p class="text-desaturatedDarkCyan md:text-sm">&#8226;</p>
+      <p class="text-desaturatedDarkCyan md:text-sm">${ele.contract}</p>
+      <p class="text-desaturatedDarkCyan md:text-sm">&#8226;</p>
+      <p class="text-desaturatedDarkCyan md:text-sm">${ele.location}</p>
+      </div>
+    </div>
+
+    <div class="flex items-center flex-wrap gap-3 md:bg-red-500 md:flex-nowrap">
+      <div
+        class="filter-element flex group hover:cursor-pointer md:mr-0"
+      >
+        <div
+          class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
+        >
+          <p
+            class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
+          >
+          ${ele.role}
+          </p>
+        </div>
+      </div>
+    
+      <div
+        class="filter-element flex group hover:cursor-pointer md:mr-0"
+      >
+        <div
+          class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
+        >
+          <p
+            class="text-desaturatedDarkCyan font-semibold text-sm group-hover:text-white"
+          >
+          ${ele.level}
+          </p>
+        </div>
+      </div>
+
+      <div
+        id="container-languages"
+        class="flex justify-center gap-3 items-center md:mt-0"
+      >
+      ${displayLanguages(ele)}
+      </div>
+      <div
+        id="container-tools"
+        class="flex justify-center gap-3 items-center md:mt-0"
+      >
+      ${displayTools(ele)}
+      </div>
+    </div>
+  </div>`;
+
+    containerList.insertAdjacentHTML("beforeend", html);
+  });
 };
 
 const displayLanguages = function (ele) {
   let html = ``;
   ele.languages.forEach((language) => {
     html += `<div
-  class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
+  class="filter-element flex group hover:cursor-pointer md:mr-0"
   >
     <div
       class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
@@ -162,7 +161,7 @@ const displayTools = function (ele) {
   let html = ``;
   ele.tools.forEach((tool) => {
     html += `<div
-  class="filter-element flex mr-4 group hover:cursor-pointer md:mr-0 md:ml-4"
+  class="filter-element flex group hover:cursor-pointer md:mr-0"
   >
     <div
       class="flex justify-center items-center bg-lightGrayishCyanF px-2 py-1 rounded-sm group-hover:bg-desaturatedDarkCyan"
@@ -242,16 +241,18 @@ const createSearchItem = function () {
 
 // Clearing searchresults
 btnClear.addEventListener("click", function () {
+  console.log(searchResults);
   searchResults = document.querySelectorAll(".search-result");
-  searchResults.forEach((ele) => ele.classList.add("hidden"));
+  console.log(searchResults);
+  searchResults.forEach((ele) => ele.remove());
 
   jobItems.forEach((item) => item.classList.remove("hidden"));
 });
 
 const setup = async function () {
-  await getData("data.json");
+  const data = await getData("data.json");
+  displayJobs(data);
   createSearchItem();
-  console.log(jobItems);
 };
 
 setup();
