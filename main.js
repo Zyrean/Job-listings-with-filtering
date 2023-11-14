@@ -27,9 +27,9 @@ const displayJobs = function (data) {
   data.forEach((ele, i) => {
     const html = `<div
     id="job-item"
-    class="relative flex flex-col bg-white rounded-md px-6 py-6 space-y-6 shadow-xl max-w-sm hover:border-desaturatedDarkCyan hover:border-l-4  hover:cursor-pointer md:flex-row md:max-w-full md:space-y-0 md:items-center"
+    class="relative flex flex-col bg-white rounded-md px-6 py-6 space-y-6 shadow-xl max-w-sm hover:border-desaturatedDarkCyan hover:border-l-4 hover:cursor-pointer md:flex-row md:max-w-full md:space-y-0 md:items-center"
   >
-
+  
     <div id="icon-mobile" class="absolute -top-4 w-10">
       <img src="assets/images/${ele.company
         .toLowerCase()
@@ -42,7 +42,10 @@ const displayJobs = function (data) {
         .replaceAll(" ", "")
         .replaceAll(".", "")}.svg" alt="" />
     </div>
-    <!-- items information -->
+
+    <div class="flex flex-col md:flex-row">
+
+    <!-- Job company information -->
     <div class="flex flex-col space-y-3 md:ml-6 md:space-y-2">
       <div class="flex items-center">
         <p
@@ -87,7 +90,8 @@ const displayJobs = function (data) {
       </div>
     </div>
 
-    <div class="flex items-center flex-wrap gap-3 md:bg-red-500 md:flex-nowrap">
+    <!-- Job requirements information -->
+    <div class="flex items-center mt-4 flex-wrap gap-3 md:flex-nowrap">
       <div
         class="filter-element flex group hover:cursor-pointer md:mr-0"
       >
@@ -128,6 +132,7 @@ const displayJobs = function (data) {
       >
       ${displayTools(ele)}
       </div>
+    </div>
     </div>
   </div>`;
 
